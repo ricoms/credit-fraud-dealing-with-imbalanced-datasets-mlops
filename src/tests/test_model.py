@@ -9,7 +9,7 @@ class TestModel:
 
     def test_model_id(self):
         o = ProjectModel()
-        assert o.model_id == "divorce"
+        assert o.model_id == "credit-card-fraud"
 
     def test_save(self, tmp_path):
         dataset_path = Path('ml/input/test/sample.csv')
