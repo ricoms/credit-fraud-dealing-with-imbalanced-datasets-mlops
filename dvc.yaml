@@ -1,0 +1,5 @@
+stages:
+  get-data:
+    cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data
+    outs:
+    - ml/input/data/creditcard.csv
