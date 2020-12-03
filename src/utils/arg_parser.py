@@ -1,6 +1,7 @@
 import argparse
 import configparser
 import datetime
+import multiprocessing
 import os
 import time
 from abc import ABC, abstractmethod
@@ -12,12 +13,13 @@ class ArgParser(ABC):
 
     def __init__(self):
         self.environment = os.environ.get("ENVIRON", "LOCAL")
-
+        
         config_defaults = {'home_dir': self.get_project_root()} \
             if self.environment == "LOCAL" else {}
         config = configparser.ConfigParser(config_defaults)
         config.read(self.configuration_file_path)
 
+        os.environ["SM_NUM_CPUS"] = str(multiprocessing.cpu_count())
         for key, value in config[self.environment].items():
             os.environ[key.upper()] = value
 
