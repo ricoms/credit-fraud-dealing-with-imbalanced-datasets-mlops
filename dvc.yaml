@@ -3,3 +3,20 @@ stages:
     cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
     outs:
     - ml/input/data/training/creditcard.csv
+  train:
+    cmd: cd src/ && ./train --project_name credit-fraud --input_dir ../ml/input/data/training/creditcard.csv
+    deps:
+    - src/experiment
+    - src/train
+    - src/utils
+    outs:
+    - ml/output/credit-card-fraud/confusion-matrix.png:
+        cache: false
+    - ml/output/credit-card-fraud/model.joblib:
+        cache: false
+    - ml/output/credit-card-fraud/precision-recall-curve.png:
+        cache: false
+    - ml/output/model.tar.gz
+    metrics:
+    - ml/output/credit-card-fraud/metrics.txt:
+        cache: false
