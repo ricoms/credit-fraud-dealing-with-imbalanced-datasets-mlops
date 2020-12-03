@@ -1,5 +1,5 @@
 stages:
   get-data:
-    cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data
+    cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
     outs:
-    - ml/input/data/creditcard.csv
+    - ml/input/data/training/creditcard.csv
