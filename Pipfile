@@ -4,10 +4,26 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
+pytest-cov = "*"
+flake8 = "*"
 
 [packages]
 scikit-learn = "*"
+configparser = "*"
+matplotlib = "*"
+python-dateutil = "*"
+falcon = "*"
+gunicorn = {extras = ["tornado"], version = "==19.9.0"}
+joblib = "*"
+h5py = "*"
+pyyaml = "*"
+pillow = "*"
+python-json-logger = "*"
+dask = {extras = ["dataframe"], version = "*"}
+imblearn = "*"
 pandas = "*"
+seaborn = "*"
 
 [requires]
 python_version = "3.8"
