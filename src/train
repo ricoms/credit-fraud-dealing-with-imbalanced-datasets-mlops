@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+from experiment.artifacts import ExperimentArtifacts
+from experiment.experiment import Experiment
+from experiment.model import ProjectModel
+from utils.arg_parser import TrainArgParser
+from utils.logger import logger
+
+
+if __name__ == '__main__':
+    logger.info(f"Begin train.py")
+
+    arg_parser = TrainArgParser()
+    args = arg_parser.get_arguments()
+
+    run_tag = f"{args.project_name}-{args.run_tag}"
+    dataset_path = args.input_dir
+
+    model = ProjectModel()
+
+    artifacts_handler = ExperimentArtifacts(
+        run_tag=run_tag,
+        model_name=model.model_id,
+        base_path=args.output_dir,
+    )
+    experiment = Experiment(
+        run_tag=run_tag,
+        model=model,
+        input_dir=dataset_path,
+        artifacts_handler=artifacts_handler,
+    )
+    experiment.run()
+
+    logger.info(f"End train.py")
