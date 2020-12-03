@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+from utils.arg_parser import APIArgParser
+from utils.logger import logger
+from utils.servers import GunicornServe
+
+if __name__ == "__main__":
+    logger.info("Begin serve")
+
+    arg_parser = APIArgParser()
+    args = arg_parser.get_arguments()
+
+    server = GunicornServe(
+        model_dir=args.model_dir,
+        model_server_workers=args.num_cpus,
+        model_server_timeout=args.model_server_timeout,
+    )
+    server.start_server()
+
+    logger.info("End serve")
