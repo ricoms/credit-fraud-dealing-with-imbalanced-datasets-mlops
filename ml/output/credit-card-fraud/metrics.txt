@@ -1,0 +1,5 @@
+avg_accuracy: 0.966
+avg_precision: 0.063
+avg_recall: 0.878
+avg_f1: 0.116
+avg_auc: 0.922
