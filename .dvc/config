@@ -1,0 +1,4 @@
+[core]
+    remote = main-artifact-remote
+['remote "main-artifact-remote"']
+    url = s3://credit-fraud
