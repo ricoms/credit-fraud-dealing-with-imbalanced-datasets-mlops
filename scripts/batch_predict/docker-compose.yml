@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  
+  batch-request:
+    depends_on: 
+      - credit-fraud-api
+    image: curlimages/curl:7.73.0
+    volumes:
+      - "../../ml/input/api:/opt"
+      - ".:/opt/output"
+    restart: always
+    links:
+      - credit-fraud-api
+    command: bash -c "
+      echo HELLO WORLD"
+      # - bash -c 'while [[ "$$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' credit-fraud-api:8080/health-check/liveness)" != "200" ]]; do echo ..; sleep 5; done; echo "backend is up"'
+      # - '/usr/bin/curl --header "Content-Type: application/json" --request POST --data-binary @/opt/payload.json "credit-fraud-api:8080/invocations" > /opt//output.json'
+
+  credit-fraud-api:
+    image: 'credit-fraud-ml'
+    volumes:
+      - "../../ml:/opt/ml"
+    expose:
+      - "8080"
+    restart: always
+    healthcheck:
+      test: "curl -f https://localhost/ping || false"
+      timeout: 10s
+      retries: 3
+    command: serve

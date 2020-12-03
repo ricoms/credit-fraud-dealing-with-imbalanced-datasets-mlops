@@ -1,3 +1,5 @@
+#!/bin/bash
+
 payload=$1
 content=${2}
 

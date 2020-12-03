@@ -51,7 +51,7 @@ serve: build-image ml/output/credit-card-fraud/model.joblib
 			serve \
 				--num_cpus=1
 
-predict: scripts/predict.sh
+predict: scripts/predict.sh ml/input/api/payload.json
 	./scripts/predict.sh ml/input/api/payload.json application/json
 
 # CICD commands
