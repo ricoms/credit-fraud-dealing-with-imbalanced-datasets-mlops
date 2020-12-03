@@ -1,0 +1,54 @@
+name: evaluate, build and Integrate to GitHub Packages
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Dockerfile'
+      - 'src/**'
+      - '.github/**'
+
+env:
+  IMAGE: divorce-evaluator
+
+jobs:
+  docker-lint:
+    name: Hadolint Dockerfile
+    runs-on: macOS-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run hadolint
+        run: |
+          brew install hadolint
+          hadolint ./Dockerfile | tee -a hadolint_lint.txt
+          lintErrors=$(stat -f%z hadolint_lint.txt)
+          if [ "$lintErrors" -gt "0" ]; then
+              echo "Errors have been found, please see below"
+              cat hadolint_lint.txt
+              exit 1
+          else
+              echo "No erros found on Dockerfile!!"
+          fi
+  
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish
+    needs: [docker-lint]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: ${{ github.repository }}/divorce-evaluator
+          tag_with_sha: true
