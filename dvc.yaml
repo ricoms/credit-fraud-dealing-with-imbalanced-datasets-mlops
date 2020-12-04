@@ -1,14 +1,11 @@
 stages:
   train:
-    cmd: make docker-train
+    cmd: cd src/ && ./train --project_name credit-fraud --input_dir ../ml/input/data/training/creditcard.csv
     deps:
     - ml/input/data/training/creditcard.csv
     - src/experiment
     - src/train
     - src/utils
-    - Makefile
-    - Dockerfile
-    - Pipfile
     outs:
     - ml/output/credit-card-fraud/confusion-matrix.png:
         cache: false

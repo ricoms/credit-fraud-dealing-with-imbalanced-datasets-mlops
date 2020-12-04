@@ -42,7 +42,8 @@ jobs:
       - name: Update dvc
         shell: bash
         run: |
-          pip install 'dvc[s3]==1.11.2'
+          pip install --no-cache-dir pipenv==2020.8.13
+          pipenv install --dev
 
       - name: cml_run
         shell: bash
@@ -50,8 +51,8 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # run-cache and reproduce pipeline
-          dvc pull ml/input/data/training/creditcard.csv.dvc
-          dvc repro
+          pipenv run dvc pull ml/input/data/training/creditcard.csv.dvc
+          pipenv run dvc repro
 
           # Report metrics
           echo "## Metrics" >> report.md
