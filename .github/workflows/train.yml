@@ -39,19 +39,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Copy files to the test website with the AWS CLI
-        run: |
-          dvc pull
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: cml_run
         shell: bash
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # run-cache and reproduce pipeline
-          dvc repro --downstream train
+          dvc repro
 
           # Report metrics
           echo "## Metrics" >> report.md
