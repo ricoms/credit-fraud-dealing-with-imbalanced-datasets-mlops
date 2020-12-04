@@ -55,3 +55,8 @@ jobs:
           echo -e "## Plots\n### Class confusions" >> report.md
           cml-publish ml/output/credit-card-fraud/confusion_matrix.png --md >> report.md
           cml-send-comment report.md
+          
+      - name: Save artifacts package
+        shell: bash
+        run: |
+          dvc push
