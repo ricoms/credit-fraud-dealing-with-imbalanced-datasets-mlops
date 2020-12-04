@@ -50,7 +50,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # run-cache and reproduce pipeline
-          dvc pull data --run-cache
+          dvc pull --run-cache
           dvc repro
 
           # Report metrics
