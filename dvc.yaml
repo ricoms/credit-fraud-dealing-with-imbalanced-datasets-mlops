@@ -6,6 +6,7 @@ stages:
   train:
     cmd: cd src/ && ./train --project_name credit-fraud --input_dir ../ml/input/data/training/creditcard.csv
     deps:
+    - ml/input/data/training/creditcard.csv
     - src/experiment
     - src/train
     - src/utils

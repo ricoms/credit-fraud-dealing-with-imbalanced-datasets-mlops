@@ -7,6 +7,9 @@ get-data:
 train:
   cmd: cd src/ && ./train --project_name credit-fraud --input_dir ../ml/input/data/training/creditcard.csv
   deps:
+  - path: ml/input/data/training/creditcard.csv
+    md5: e90efcb83d69faf99fcab8b0255024de
+    size: 150828752
   - path: src/experiment
     md5: ed064f601ec1da6d691651e7779f71eb.dir
     size: 9334
@@ -15,8 +18,8 @@ train:
     md5: cb6c4a629d03d047f80d1d5a014ea828
     size: 850
   - path: src/utils
-    md5: 676102c312eff1d2f727d12529589a79.dir
-    size: 9093
+    md5: 7dee500f97efa451c673d2b8bb74c3ed.dir
+    size: 9193
     nfiles: 5
   outs:
   - path: ml/output/credit-card-fraud/confusion-matrix.png
@@ -32,5 +35,5 @@ train:
     md5: b63dd8bc9134a7a1ce087a418a38a421
     size: 33651
   - path: ml/output/model.tar.gz
-    md5: f781ee4efa9e9b8f36d28395f97c088b
-    size: 180845
+    md5: 2258fa07e4943e6aa76bccb8cf88db10
+    size: 180846
