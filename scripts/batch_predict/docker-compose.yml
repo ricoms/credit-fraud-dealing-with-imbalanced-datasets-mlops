@@ -16,7 +16,7 @@ services:
     command: ./opt/output/request.py
 
   credit-fraud-api:
-    image: 'credit-fraud-ml'
+    image: 'credit-fraud-dealing-with-imbalanced-datasets-mlops_serve'
     networks:
       - test
     volumes:
