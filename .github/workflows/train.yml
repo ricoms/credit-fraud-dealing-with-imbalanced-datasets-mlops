@@ -54,7 +54,6 @@ jobs:
           dvc pull
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-        run: |
 
       - name: cml_run
         shell: bash
