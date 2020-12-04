@@ -19,8 +19,9 @@ jobs:
 
       - name: Run test
         run: |
-          make install
-          make test
+          pip install --no-cache-dir pipenv==2020.8.13
+          pipenv install --dev
+          pipenv run pytest -v
 
   train-test:
     name: Train and report
@@ -40,7 +41,7 @@ jobs:
 
       - name: Copy files to the test website with the AWS CLI
         run: |
-          pipenv run dvc pull
+          dvc pull
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
