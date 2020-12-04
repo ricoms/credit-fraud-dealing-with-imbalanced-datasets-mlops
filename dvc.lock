@@ -1,6 +1,18 @@
 train:
-  cmd: cd src/ && ./train --project_name credit-fraud --input_dir ../ml/input/data/training/creditcard.csv
+  cmd: make docker-train
   deps:
+  - path: Dockerfile
+    md5: 84a6d8f25ff3901e8112b94308f1307e
+    size: 1190
+  - path: Makefile
+    md5: 7c411e3828f4d5f96e59f0e73803197a
+    size: 2141
+  - path: Pipfile
+    md5: 85b33eb73f6677a7fff8279e690d6ed4
+    size: 524
+  - path: Pipfile.lock
+    md5: 3659408e73d8a628e16dc5d3246ee7db
+    size: 93142
   - path: ml/input/data/training/creditcard.csv
     md5: e90efcb83d69faf99fcab8b0255024de
     size: 150828752
@@ -23,11 +35,11 @@ train:
     md5: 63810924c6c3565e3b9698693c5e5cdc
     size: 88
   - path: ml/output/credit-card-fraud/model.joblib
-    md5: 7ab22ef88b042ee919b049eda96a1040
+    md5: bd961767d9b3c7b57927ea85fed1dfd7
     size: 203260
   - path: ml/output/credit-card-fraud/precision-recall-curve.png
     md5: b63dd8bc9134a7a1ce087a418a38a421
     size: 33651
   - path: ml/output/model.tar.gz
-    md5: 9d059c0146567a7d59541035627055eb
-    size: 180846
+    md5: 13ef24d262b966ced49ebd6757ba2065
+    size: 180832

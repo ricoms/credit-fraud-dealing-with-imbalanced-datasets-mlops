@@ -42,8 +42,7 @@ jobs:
       - name: Update dvc
         shell: bash
         run: |
-          pip install --no-cache-dir pipenv==2020.8.13
-          pipenv install --dev
+          pip install 'dvc[s3]==1.11.2'
 
       - name: cml_run
         shell: bash
@@ -51,13 +50,13 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # run-cache and reproduce pipeline
-          pipenv run dvc pull ml/input/data/training/creditcard.csv.dvc
-          pipenv run dvc repro
+          dvc pull ml/input/data/training/creditcard.csv.dvc
+          dvc repro
 
           # Report metrics
           echo "## Metrics" >> report.md
           git fetch --prune
-          pipenv run dvc metrics diff main --show-md >> report.md
+          dvc metrics diff main --show-md >> report.md
 
           # Publish confusion matrix diff
           echo -e "## Plots\n### Class confusions" >> report.md
