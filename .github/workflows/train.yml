@@ -2,10 +2,11 @@ name: Machine Learning Train
 
 on:
   push:
+    branches:
+      - master
     paths:
       - 'src/train'
       - 'src/experiment/**'
-      - '.github/**'
 
 jobs:
   python-test:
@@ -52,6 +53,7 @@ jobs:
           pipenv run dvc pull
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
 
       - name: cml_run
         shell: bash

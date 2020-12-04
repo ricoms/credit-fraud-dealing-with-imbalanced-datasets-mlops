@@ -21,7 +21,7 @@ help:
 
 test:
 	# Additional, optional, tests could go here
-	pipenv run pytest -v
+	pytest -v
 
 clean:
 	rm -r *.project
