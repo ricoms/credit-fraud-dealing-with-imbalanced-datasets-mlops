@@ -35,6 +35,9 @@ install:
 # 		--project_name ${project-name} \
 # 		--input_dir ../${DATA_FILE}
 
+data:
+	kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
+
 profile-data:
 	./scripts/data_profiler.py --data_path ml/input/data/training/creditcard.csv --output_dir ml/output/credit-card-fraud/
 	

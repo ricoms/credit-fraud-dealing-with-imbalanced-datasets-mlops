@@ -1,8 +1,4 @@
 stages:
-  get-data:
-    cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
-    outs:
-    - ml/input/data/training/creditcard.csv
   train:
     cmd: make docker-train
     deps:
@@ -19,8 +15,6 @@ stages:
     - ml/output/credit-card-fraud/model.joblib:
         cache: false
     - ml/output/credit-card-fraud/precision-recall-curve.png:
-        cache: false
-    - ml/output/credit-card-fraud/data_profile.html:
         cache: false
     - ml/output/model.tar.gz
     metrics:

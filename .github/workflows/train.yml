@@ -45,17 +45,20 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # run-cache and reproduce pipeline
+          dvc pull data --run-cache
           dvc repro
 
           # Report metrics
           echo "## Metrics" >> report.md
           git fetch --prune
           pipenv run dvc metrics diff main --show-md >> report.md
+
           # Publish confusion matrix diff
           echo -e "## Plots\n### Class confusions" >> report.md
           cml-publish ml/output/credit-card-fraud/confusion_matrix.png --md >> report.md
-          cml-send-comment report.md
           
+          cml-send-comment report.md
+
       - name: Save artifacts package
         shell: bash
         run: |
