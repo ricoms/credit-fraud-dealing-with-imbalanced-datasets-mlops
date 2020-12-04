@@ -6,7 +6,8 @@ stages:
     - src/experiment
     - src/train
     - src/utils
-    - Dockerfile
+    - docker/Dockerfile
+    - docker-compose.yml
     - Makefile
     - Pipfile
     - Pipfile.lock

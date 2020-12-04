@@ -7,7 +7,8 @@ DOCKER_IMAGE_NAME=credit-fraud-ml
 hyperparameters_file=ml/input/config/hyperparameters.json
 hyperparameters=`cat ${hyperparameters_file}`
 
-CURRENT_UID := $(shell id -u)
+UID_GID := "$(shell id -u):$(shell id -g)"
+
 time-stamp=$(shell date "+%Y-%m-%d-%H%M%S")
 DATA_FILE = ml/input/data/training/creditcard.csv
 
@@ -41,21 +42,12 @@ data:
 profile-data:
 	./scripts/data_profiler.py --data_path ml/input/data/training/creditcard.csv --output_dir ml/output/credit-card-fraud/
 	
-docker-train: build-image ${DATA_FILE}
-	docker run --rm \
-		-u ${CURRENT_UID}:${CURRENT_UID} \
-		-v ${PWD}/ml:/opt/ml \
-		${DOCKER_IMAGE_NAME} train \
-			--project_name ${project-name} \
-			--input_dir /opt/${DATA_FILE}
+docker-train: ${DATA_FILE}
+	UID_GID=${UID_GID} docker-compose up --build -V train
+	UID_GID=${UID_GID} docker-compose down -v
 
-serve: build-image ml/output/credit-card-fraud/model.joblib
-	docker run --rm -it \
-		-v $(PWD)/ml:/opt/ml \
-		-p 8080:8080 \
-		${DOCKER_IMAGE_NAME} \
-			serve \
-				--num_cpus=1
+serve: ml/output/credit-card-fraud/model.joblib
+	docker-compose up --build -V serve
 
 predict: scripts/predict.sh ml/input/api/payload.json
 	./scripts/predict.sh ml/input/api/payload.json application/json

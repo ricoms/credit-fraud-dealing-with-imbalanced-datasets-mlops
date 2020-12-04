@@ -1,18 +1,21 @@
 train:
   cmd: make docker-train
   deps:
-  - path: Dockerfile
-    md5: 84a6d8f25ff3901e8112b94308f1307e
-    size: 1190
   - path: Makefile
-    md5: 7c411e3828f4d5f96e59f0e73803197a
-    size: 2141
+    md5: 255ffc8fdf54ff964dbb025b3ee2a8c6
+    size: 1966
   - path: Pipfile
     md5: 85b33eb73f6677a7fff8279e690d6ed4
     size: 524
   - path: Pipfile.lock
     md5: 3659408e73d8a628e16dc5d3246ee7db
     size: 93142
+  - path: docker-compose.yml
+    md5: 8b3f82eaef7695af00910693749bdc53
+    size: 549
+  - path: docker/Dockerfile
+    md5: 84a6d8f25ff3901e8112b94308f1307e
+    size: 1190
   - path: ml/input/data/training/creditcard.csv
     md5: e90efcb83d69faf99fcab8b0255024de
     size: 150828752
@@ -41,5 +44,5 @@ train:
     md5: b63dd8bc9134a7a1ce087a418a38a421
     size: 33651
   - path: ml/output/model.tar.gz
-    md5: 13ef24d262b966ced49ebd6757ba2065
+    md5: 5932f5b5a92c7c0f045dd5ea2ce0021e
     size: 180832
