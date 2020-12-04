@@ -22,6 +22,8 @@ jobs:
           pip install --no-cache-dir pipenv==2020.8.13
           pipenv install --dev
           pipenv run pytest -v
+          curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
 
   train-test:
     name: Train and report
