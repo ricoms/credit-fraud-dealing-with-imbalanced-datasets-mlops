@@ -35,5 +35,5 @@ train:
     md5: b63dd8bc9134a7a1ce087a418a38a421
     size: 33651
   - path: ml/output/model.tar.gz
-    md5: 2258fa07e4943e6aa76bccb8cf88db10
-    size: 180846
+    md5: c3162931b65a0237b18251d5983a5451
+    size: 180845
