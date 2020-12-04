@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+
+  train:
+    container_name: credit-fraud-train
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    user: ${UID_GID}
+    volumes:
+      - ./ml:/opt/ml:rw
+    command: train --project_name credit-fraud --input_dir /opt/ml/input/data/training/creditcard.csv
+
+  serve:
+    container_name: credit-fraud-serve
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    network_mode: host
+    ports:
+      - 8008:8080
+    volumes:
+      - ./ml:/opt/ml:rw
+    command: serve --num_cpus=1
+
+volumes:
+  ml:
