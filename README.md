@@ -58,6 +58,7 @@ The left terminal is serving the API where we can see the 'server' logs, while t
 
 #### **Offline/Batch Prediction**
 
+For this I setup a small module at this path `scripts/batch_predict/` which contains three files `batch_predict.sh`, `docker-compose.yml` and `request.py`. This modules uses [**docker-compose**](https://docs.docker.com/compose/). Inside this folder you run `./batch_predict.sh`. This script will verify if required files (`model.joblib` and `payload.json` exists in their expected folders), will raise the docker configuration setup defined at `docker-compose.yml`, will wait until a `response.json` is generated, and finally will destroy the docker configuration setup.
 
 
 ## 5 How do I install it?
