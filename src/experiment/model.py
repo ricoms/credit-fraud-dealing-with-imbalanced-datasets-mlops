@@ -55,7 +55,7 @@ class ProjectModel(MLModel):
         return self.model
 
     def __build_model(self):
-        log_reg_params = {"penalty": 'l2', 'C': 0.1}
+        log_reg_params = {"penalty": 'l2', 'C': 1}
 
         std_scaler = StandardScaler()
         smt = SMOTE(k_neighbors=3, random_state=42, sampling_strategy='minority')

@@ -2,10 +2,8 @@ name: Machine Learning Train
 
 on:
   push:
-    paths:
-      - 'src/train'
-      - 'src/experiment/**'
-      - '.github/**'
+    branches:
+      - master
 
 jobs:
   python-test:
@@ -38,6 +36,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt install python3.8
           make install
 
       - name: Configure AWS Credentials
