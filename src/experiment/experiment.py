@@ -30,6 +30,7 @@ class Experiment:
         with open(self.input_dir, 'r') as file:
             data = file.read().replace('"', '')
         data = np.genfromtxt(StringIO(data), delimiter=',', skip_header=1)  # , dtype=None
+        self.artifacts_handler.profile(data, INPUT_COLUMNS)
         self.X, self.y = data[:, :-1], data[:, -1]
         shape0 = self.y.shape[0]
         bin_counts = np.bincount(self.y.astype(np.int32))
