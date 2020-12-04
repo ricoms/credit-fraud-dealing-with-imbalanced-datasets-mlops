@@ -42,7 +42,7 @@ jobs:
       - name: Update dvc
         shell: bash
         run: |
-          pip install 'dvc==1.11.2'
+          pip install 'dvc[s3]==1.11.2'
 
       - name: cml_run
         shell: bash
