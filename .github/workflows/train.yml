@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'src/train'
-      - 'src/experiment/**'
 
 jobs:
   python-test:
@@ -39,6 +36,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt install python3.8
           make install
 
       - name: Configure AWS Credentials
@@ -53,7 +51,6 @@ jobs:
           pipenv run dvc pull
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-        run: |
 
       - name: cml_run
         shell: bash
