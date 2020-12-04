@@ -2,52 +2,13 @@ name: Machine Learning Train
 
 on:
   push:
+    branches:
+      - master
     paths:
-      - 'Dockerfile'
-      - 'src/**'
-      - '.github/**'
+      - 'src/train'
+      - 'src/experiment/**'
 
 jobs:
-  docker-lint:
-    name: Hadolint Dockerfile
-    runs-on: macOS-latest
-    timeout-minutes: 30
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Run hadolint
-        run: |
-          brew install hadolint
-          hadolint ./Dockerfile | tee -a hadolint_lint.txt
-          lintErrors=$(stat -f%z hadolint_lint.txt)
-          if [ "$lintErrors" -gt "0" ]; then
-              echo "Errors have been found, please see below"
-              cat hadolint_lint.txt
-              exit 1
-          else
-              echo "No errors found on Dockerfile!!"
-          fi
-
-  python-lint:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Run linting
-        run: |
-          make install
-          make lint
-
   python-test:
     runs-on: ubuntu-latest
     strategy:
@@ -66,30 +27,35 @@ jobs:
         run: |
           make install
           make test
-          make coverage
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage-report
-          path: htmlcov/
-          retention-days: 5
 
   train-test:
     name: Train and report
-    needs: [docker-lint, python-lint, python-test]
+    needs: [python-test]
     runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    container: docker://dvcorg/cml-py3:runner
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: pull data
-        uses: actions-hub/gcloud@master
-        env:
-          PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
-          APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir pipenv==2020.8.13 \
+          && pipenv install --system --ignore-pipfile --deploy --clear \
+          && pip uninstall pipenv -y
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: dvc pull data --run-cach
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Copy files to the test website with the AWS CLI
+        run: |
+          dvc pull
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
 
       - name: cml_run
         shell: bash
@@ -97,30 +63,12 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # run-cache from GS and reproduce pipeline
-          dvc repro
+          dvc repro train
           # Report metrics
           echo "## Metrics" >> report.md
           git fetch --prune
           dvc metrics diff main --show-md >> report.md
           # Publish confusion matrix diff
           echo -e "## Plots\n### Class confusions" >> report.md
-          dvc plots diff --target ml/output/divorce/classes.csv --template confusion -x actual -y predicted --show-vega main > vega.json
-          vl2png vega.json -s 1.5 | cml-publish --md >> report.md
+          cml-publish ml/output/credit-card-fraud/confusion_matrix.png --md >> report.md
           cml-send-comment report.md
-
-  # setup-build-publish:
-  #   name: Setup, Build, Publish
-  #   needs: [docker-lint, python-lint, python-test]
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v2
-
-  #     - name: Push to GitHub Packages
-  #       uses: docker/build-push-action@v1
-  #       with:
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
-  #         registry: docker.pkg.github.com
-  #         repository: ${{ github.repository }}/divorce-trainer
-  #         tag_with_sha: true

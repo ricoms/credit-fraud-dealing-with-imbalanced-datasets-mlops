@@ -10,31 +10,75 @@ on:
       - '.github/**'
 
 env:
-  IMAGE: divorce-evaluator
+  IMAGE_NAME: credit-fraud-ml
 
 jobs:
-  docker-lint:
-    name: Hadolint Dockerfile
-    runs-on: macOS-latest
-    timeout-minutes: 30
+  # docker-lint:
+  #   name: Hadolint Dockerfile
+  #   runs-on: macOS-latest
+  #   timeout-minutes: 30
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Run hadolint
+  #       run: |
+  #         brew install hadolint
+  #         hadolint ./Dockerfile | tee -a hadolint_lint.txt
+  #         lintErrors=$(stat -f%z hadolint_lint.txt)
+  #         if [ "$lintErrors" -gt "0" ]; then
+  #             echo "Errors have been found, please see below"
+  #             cat hadolint_lint.txt
+  #             exit 1
+  #         else
+  #             echo "No erros found on Dockerfile!!"
+  #         fi
+  
+  python-lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Run hadolint
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run linting
         run: |
-          brew install hadolint
-          hadolint ./Dockerfile | tee -a hadolint_lint.txt
-          lintErrors=$(stat -f%z hadolint_lint.txt)
-          if [ "$lintErrors" -gt "0" ]; then
-              echo "Errors have been found, please see below"
-              cat hadolint_lint.txt
-              exit 1
-          else
-              echo "No erros found on Dockerfile!!"
-          fi
-  
+          make install
+          make lint-python
+
+  python-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run test
+        run: |
+          make install
+          make coverage
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: htmlcov/
+          retention-days: 5
+
   setup-build-publish-deploy:
     name: Setup, Build, Publish
     needs: [docker-lint]
@@ -50,5 +94,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: ${{ github.repository }}/divorce-evaluator
+          repository: ${{ github.repository }}/{{ $IMAGE_NAME }}
           tag_with_sha: true
