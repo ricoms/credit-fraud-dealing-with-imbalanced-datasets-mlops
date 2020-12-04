@@ -20,6 +20,8 @@ stages:
         cache: false
     - ml/output/credit-card-fraud/precision-recall-curve.png:
         cache: false
+    - ml/output/credit-card-fraud/data_profile.html:
+        cache: false
     - ml/output/model.tar.gz
     metrics:
     - ml/output/credit-card-fraud/metrics.txt

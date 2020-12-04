@@ -11,8 +11,8 @@ train:
     md5: 84a6d8f25ff3901e8112b94308f1307e
     size: 1190
   - path: Makefile
-    md5: 33a445d8d2997017a2e6cef6f9887760
-    size: 1962
+    md5: c1b68ed8cf7363f074b08b30a96687bd
+    size: 1918
   - path: Pipfile
     md5: 85b33eb73f6677a7fff8279e690d6ed4
     size: 524
@@ -20,8 +20,8 @@ train:
     md5: e90efcb83d69faf99fcab8b0255024de
     size: 150828752
   - path: src/experiment
-    md5: ed064f601ec1da6d691651e7779f71eb.dir
-    size: 9334
+    md5: 450dc68e135d440d5c3cc53a1891d43f.dir
+    size: 9694
     nfiles: 4
   - path: src/train
     md5: cb6c4a629d03d047f80d1d5a014ea828
@@ -34,6 +34,9 @@ train:
   - path: ml/output/credit-card-fraud/confusion-matrix.png
     md5: 3608507630664353ad60cfe49da0f9f4
     size: 23224
+  - path: ml/output/credit-card-fraud/data_profile.html
+    md5: 5ee01d69c477b0f723bb72b4975caa9f
+    size: 42623545
   - path: ml/output/credit-card-fraud/metrics.txt
     md5: 63810924c6c3565e3b9698693c5e5cdc
     size: 88
@@ -44,5 +47,5 @@ train:
     md5: b63dd8bc9134a7a1ce087a418a38a421
     size: 33651
   - path: ml/output/model.tar.gz
-    md5: 890d6a51f1ccf92d5547ca6f5afd13a1
+    md5: 591b7851a34ef26adfbc4b1b9be77c1b
     size: 180833
