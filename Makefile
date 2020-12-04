@@ -60,14 +60,14 @@ lint-docker:
 	docker run --rm -i hadolint/hadolint:v1.17.6-3-g8da4f4e-alpine < Dockerfile
 
 lint-python:
-	pipenv run flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
-	pipenv run flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+	flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
 lint: lint-docker lint-python
 	
 coverage:
-	pipenv run pytest --cov-report=term-missing --cov=src --cov-fail-under=0.4
-	pipenv run pytest --cov-report=html --cov=src
+	pytest --cov-report=term-missing --cov=src --cov-fail-under=0.4
+	pytest --cov-report=html --cov=src
 
 build-image:
 	docker build -f Dockerfile -t ${DOCKER_IMAGE_NAME} .
