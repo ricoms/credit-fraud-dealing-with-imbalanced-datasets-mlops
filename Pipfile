@@ -25,6 +25,7 @@ imblearn = "*"
 pandas = "*"
 seaborn = "*"
 pandas-profiling = "*"
+dvc = "*"
 
 [requires]
 python_version = "3.8"

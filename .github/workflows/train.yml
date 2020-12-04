@@ -39,9 +39,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --no-cache-dir pipenv==2020.8.13 \
-          && pipenv install --system --ignore-pipfile --deploy --clear \
-          && pip uninstall pipenv -y
+          make install
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -52,7 +50,7 @@ jobs:
 
       - name: Copy files to the test website with the AWS CLI
         run: |
-          dvc pull
+          pipenv run dvc pull
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -63,11 +61,11 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # run-cache from GS and reproduce pipeline
-          dvc repro train
+          pipenv run dvc repro train
           # Report metrics
           echo "## Metrics" >> report.md
           git fetch --prune
-          dvc metrics diff main --show-md >> report.md
+          pipenv run dvc metrics diff main --show-md >> report.md
           # Publish confusion matrix diff
           echo -e "## Plots\n### Class confusions" >> report.md
           cml-publish ml/output/credit-card-fraud/confusion_matrix.png --md >> report.md
