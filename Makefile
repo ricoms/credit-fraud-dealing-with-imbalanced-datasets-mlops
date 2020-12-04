@@ -30,10 +30,10 @@ install:
 	pip install --no-cache-dir pipenv==2020.8.13
 	pipenv install --dev
 
-# train: ${DATA_FILE}
-# 	cd src/ && ./train \
-# 		--project_name ${project-name} \
-# 		--input_dir ../${DATA_FILE}
+train: ${DATA_FILE}
+	cd src/ && ./train \
+		--project_name ${project-name} \
+		--input_dir ../${DATA_FILE}
 
 data:
 	kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
