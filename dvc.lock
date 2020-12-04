@@ -1,9 +1,3 @@
-get-data:
-  cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
-  outs:
-  - path: ml/input/data/training/creditcard.csv
-    md5: e90efcb83d69faf99fcab8b0255024de
-    size: 150828752
 train:
   cmd: make docker-train
   deps:
