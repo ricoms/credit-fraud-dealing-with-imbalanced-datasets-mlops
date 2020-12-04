@@ -1,12 +1,13 @@
 name: Machine Learning Train
 
 on:
-  push:
+  pull_request:
     branches:
       - master
     paths:
       - 'src/train'
       - 'src/experiment/**'
+      - '.github/**'
 
 jobs:
   python-test:
