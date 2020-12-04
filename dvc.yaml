@@ -19,5 +19,4 @@ stages:
         cache: false
     - ml/output/model.tar.gz
     metrics:
-    - ml/output/credit-card-fraud/metrics.txt:
-        cache: false
+    - ml/output/credit-card-fraud/metrics.txt
