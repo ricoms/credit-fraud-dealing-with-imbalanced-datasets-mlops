@@ -24,6 +24,7 @@ dask = {extras = ["dataframe"], version = "*"}
 imblearn = "*"
 pandas = "*"
 seaborn = "*"
+pandas-profiling = "*"
 
 [requires]
 python_version = "3.8"
