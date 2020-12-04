@@ -3,9 +3,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict
 
-import pandas as pd
-from pandas_profiling import ProfileReport
-
 from utils.files import TarFile
 from utils.logger import logger
 
@@ -41,12 +38,7 @@ class ExperimentArtifacts:
                 file_name = self.output_prefix / f"{name}.png"
                 logger.debug(f"Saving {file_name}")
                 figure.savefig(file_name)
-    
-    def profile(self, data, columns):
-        df = pd.DataFrame(data=data, columns=columns)
-        profile = ProfileReport(df, title="Pandas Profiling Report")
-        profile.to_file(self.output_prefix / "data_profile.html")
-    
+        
     def save(self):
         self.save_results()
 
