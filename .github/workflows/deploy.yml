@@ -3,7 +3,7 @@ name: evaluate, build and Integrate to GitHub Packages
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'Dockerfile'
       - 'src/**'

@@ -1,9 +1,6 @@
 name: Machine Learning Train
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
   python-test:
