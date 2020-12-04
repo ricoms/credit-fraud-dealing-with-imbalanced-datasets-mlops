@@ -31,11 +31,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: |
-          apt install python3.8
-          make install
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -54,8 +49,9 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # run-cache from GS and reproduce pipeline
-          pipenv run dvc repro train
+          # run-cache and reproduce pipeline
+          dvc repro --downstream train
+
           # Report metrics
           echo "## Metrics" >> report.md
           git fetch --prune
