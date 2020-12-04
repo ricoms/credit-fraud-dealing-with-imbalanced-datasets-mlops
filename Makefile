@@ -35,6 +35,9 @@ install:
 # 		--project_name ${project-name} \
 # 		--input_dir ../${DATA_FILE}
 
+profile-data:
+	./scripts/data_profiler.py --data_path ml/input/data/training/creditcard.csv --output_dir ml/output/credit-card-fraud/
+	
 docker-train: build-image ${DATA_FILE}
 	docker run --rm \
 		-u ${CURRENT_UID}:${CURRENT_UID} \
