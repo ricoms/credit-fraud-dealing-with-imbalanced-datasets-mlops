@@ -39,6 +39,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Update dvc
+        shell: bash
+        run: |
+          pip install 'dvc==1.11.2'
+
       - name: cml_run
         shell: bash
         env:
@@ -56,7 +61,7 @@ jobs:
           # Publish confusion matrix diff
           echo -e "## Plots\n### Class confusions" >> report.md
           cml-publish ml/output/credit-card-fraud/confusion_matrix.png --md >> report.md
-          
+
           cml-send-comment report.md
 
       - name: Save artifacts package
