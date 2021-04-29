@@ -6,7 +6,6 @@ stages:
     - src/experiment
     - src/train
     - src/utils
-    - docker/Dockerfile
     - Makefile
     - Pipfile
     - Pipfile.lock

@@ -43,15 +43,12 @@ profile-data:
 	./scripts/data_profiler.py --data_path ml/input/data/training/creditcard.csv --output_dir ml/output/credit-card-fraud/
 
 docker-build:	
-	docker build -f docker/Dockerfile -t ${DOCKER_IMAGE_NAME} .
+	docker build -f ./docker/Dockerfile -t ${DOCKER_IMAGE_NAME} .
 
-docker-train: ${DATA_FILE} docker-build
-	docker run \
-		-u ${UID_GID} \
-		-v ${PWD}/ml:/opt/ml \
-		${DOCKER_IMAGE_NAME} train \
-			--project_name credit-fraud \
-			--input_dir /opt/ml/input/data/training/creditcard.csv
+docker-train: ${DATA_FILE}
+	./src/train \
+		--project_name credit-fraud \
+		--input_dir ml/input/data/training/creditcard.csv
 
 serve: ml/output/credit-card-fraud/model.joblib docker-build
 	docker run ${DOCKER_IMAGE_NAME} -v ./ml:/opt/ml:rw serve --num_cpus=1

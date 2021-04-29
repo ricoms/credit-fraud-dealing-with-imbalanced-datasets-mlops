@@ -20,8 +20,8 @@ jobs:
       - name: Run test
         run: |
           pip install --no-cache-dir pipenv==2020.8.13
-          pipenv install --dev
-          pipenv run pytest -v
+          pipenv install --system --ignore-pipfile --deploy --clear --dev
+          pytest -v
 
   train-test:
     name: Train and report
@@ -40,22 +40,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Install dvc
-        shell: bash
-        run: |
-          pip install 'dvc[s3]==2.0.18'
-
       - name: cml_run
         shell: bash
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          tree .
           # run-cache and reproduce pipeline
           dvc pull ml/input/data/training/creditcard.csv.dvc
           dvc repro -m
-          git add dvc.lock
-          git push
 
           # Report metrics
           echo "## Metrics" >> report.md

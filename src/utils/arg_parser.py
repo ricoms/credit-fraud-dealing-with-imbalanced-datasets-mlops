@@ -14,7 +14,7 @@ class ArgParser(ABC):
     def __init__(self):
         self.environment = os.environ.get("ENVIRON", "LOCAL")
 
-        config_defaults = {'home_dir': self.get_project_root()} \
+        config_defaults = {'home_dir': self.project_root} \
             if self.environment == "LOCAL" else {}
         config = configparser.ConfigParser(config_defaults)
         config.read(self.configuration_file_path)
@@ -27,12 +27,13 @@ class ArgParser(ABC):
             .fromtimestamp(time.time()) \
             .strftime('%Y-%m-%d-%H%M%S')
 
-    def get_project_root(self) -> Path:
+    @property
+    def project_root(self) -> Path:
         return Path(__file__).parent.parent.parent
 
     @property
     def configuration_file_path(self) -> str:
-        return "config.ini"
+        return self.project_root / "src/config.ini"
 
     @property
     def hyperparameters_file_name(self) -> str:
