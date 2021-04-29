@@ -1,11 +1,11 @@
 schema: '2.0'
 stages:
   train:
-    cmd: make docker-train
+    cmd: make train
     deps:
     - path: Makefile
-      md5: 2096124208027ccb13e3459540383826
-      size: 2093
+      md5: 622ccab1e5c0b28a99058475e8c5c192
+      size: 2086
     - path: Pipfile
       md5: 144f64824b2546595a0126f644efa99c
       size: 560
@@ -13,35 +13,35 @@ stages:
       md5: 51990ddf928f59923c200a291cf0d25e
       size: 104246
     - path: ml/input/config/hyperparameters.json
-      md5: 44a2d4c51b17a0fc6a33c349d415ec8d
-      size: 46
+      md5: b0ca0075f5cde2336dc0937199a5cd50
+      size: 50
     - path: ml/input/data/training/creditcard.csv
       md5: e90efcb83d69faf99fcab8b0255024de
       size: 150828752
     - path: src/experiment
-      md5: 1aa6d7a0b7afadbd3b5c69d325343ce1.dir
-      size: 20925
+      md5: c2e1f99432cd6321aa642b92f4f4f55b.dir
+      size: 20889
       nfiles: 8
     - path: src/train
       md5: 7245c62efde2809071e646723e5a08e1
       size: 992
     - path: src/utils
-      md5: fc81529831b4cfe783bb9cf07709e0d4.dir
+      md5: 47409353f961b5874219ff85eeb4246f.dir
       size: 19674
       nfiles: 9
     outs:
     - path: ml/output/credit-card-fraud/confusion-matrix.png
-      md5: b459c509b5626ad56d7eced89b3b84e9
-      size: 22847
+      md5: 402a50b10e63aa4361c819bcd44f2683
+      size: 23313
     - path: ml/output/credit-card-fraud/metrics.txt
-      md5: 65d71798033a927add8034be9f5706eb
+      md5: a88256e0ef453561a375a2a35516fc82
       size: 88
     - path: ml/output/credit-card-fraud/model.joblib
-      md5: 11bf05ea978739fbd2845d7199789a2d
-      size: 97564
+      md5: 661ff41e07918f0adc4e92530bffd9d1
+      size: 97294
     - path: ml/output/credit-card-fraud/precision-recall-curve.png
-      md5: 5ad6153685caf51e66273f7aeafc5196
-      size: 34325
+      md5: 6dbf1641294753dca6fb6d304beeaf55
+      size: 33378
     - path: ml/output/model.tar.gz
-      md5: 31c44d09a3b836937a0ce17d41d292c5
-      size: 89316
+      md5: cff7c6059d1103ac7850ab0b875d5307
+      size: 89154
