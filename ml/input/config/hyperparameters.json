@@ -1,0 +1,4 @@
+{
+    "penalty": "l1",
+    "solver": "liblinear"
+}

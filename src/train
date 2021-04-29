@@ -5,10 +5,11 @@ from experiment.experiment import Experiment
 from experiment.model import ProjectModel
 from utils.arg_parser import TrainArgParser
 from utils.logger import logger
+from utils.files import JsonFile
 
 
 if __name__ == '__main__':
-    logger.info(f"Begin train.py")
+    logger.info(f"Begin train")
 
     arg_parser = TrainArgParser()
     args = arg_parser.get_arguments()
@@ -16,7 +17,10 @@ if __name__ == '__main__':
     run_tag = f"{args.project_name}-{args.run_tag}"
     dataset_path = args.input_dir
 
-    model = ProjectModel()
+    hyperparameters = JsonFile.read(args.hyperparameters_path)
+    model = ProjectModel(
+        model_hyperparameters=hyperparameters,
+    )
 
     artifacts_handler = ExperimentArtifacts(
         run_tag=run_tag,
@@ -31,4 +35,4 @@ if __name__ == '__main__':
     )
     experiment.run()
 
-    logger.info(f"End train.py")
+    logger.info(f"End train")

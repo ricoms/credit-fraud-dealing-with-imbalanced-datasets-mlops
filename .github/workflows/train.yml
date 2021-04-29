@@ -1,6 +1,9 @@
 name: Machine Learning Train
 
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   python-test:
@@ -17,24 +20,26 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir pipenv==2020.8.13
+          pipenv install --system --ignore-pipfile --deploy --clear --dev
+
       - name: Run test
         run: |
-          make install
-          make test
+          pytest -v
 
   train-test:
     name: Train and report
     needs: [python-test]
-    runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:runner
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
-      - name: Install dependencies
-        run: |
-          apt install python3.8
-          make install
+      - uses: iterative/setup-cml@v1
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -43,24 +48,40 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Copy files to the test website with the AWS CLI
+      - name: Install dependencies
         run: |
-          pipenv run dvc pull
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          pip install --no-cache-dir pipenv==2020.8.13
+          pipenv install --system --ignore-pipfile --deploy --clear
 
       - name: cml_run
         shell: bash
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # run-cache from GS and reproduce pipeline
-          pipenv run dvc repro train
+          # run-cache and reproduce pipeline
+          dvc pull ml/input/data/training/creditcard.csv.dvc
+          dvc repro -m
+
           # Report metrics
           echo "## Metrics" >> report.md
           git fetch --prune
-          pipenv run dvc metrics diff main --show-md >> report.md
+          dvc metrics diff main --show-md >> report.md
+
           # Publish confusion matrix diff
           echo -e "## Plots\n### Class confusions" >> report.md
-          cml-publish ml/output/credit-card-fraud/confusion_matrix.png --md >> report.md
+          cml-publish $PWD/ml/output/credit-card-fraud/confusion-matrix.png --md >> report.md
+
           cml-send-comment report.md
+
+      - name: Save artifacts
+        shell: bash
+        run: |
+          dvc push
+      
+      - name: Commit report
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git commit -am "Update dvc lock"
+          git push

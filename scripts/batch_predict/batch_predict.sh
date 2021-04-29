@@ -5,7 +5,7 @@ REQUIRED_FILE1="../../ml/input/api/payload.json"
 REQUIRED_FILE2="../../ml/output/credit-card-fraud/model.joblib" 
 
 if [ -f $REQUIRED_FILE1 ] && [ -f $REQUIRED_FILE2 ]; then
-    docker-compose up -d
+    docker-compose up --build -d
 
     while [ ! -f response.json ]
     do

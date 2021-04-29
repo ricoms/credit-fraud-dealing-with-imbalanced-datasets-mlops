@@ -1,39 +1,47 @@
-get-data:
-  cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
-  outs:
-  - path: ml/input/data/training/creditcard.csv
-    md5: e90efcb83d69faf99fcab8b0255024de
-    size: 150828752
-train:
-  cmd: cd src/ && ./train --project_name credit-fraud --input_dir ../ml/input/data/training/creditcard.csv
-  deps:
-  - path: ml/input/data/training/creditcard.csv
-    md5: e90efcb83d69faf99fcab8b0255024de
-    size: 150828752
-  - path: src/experiment
-    md5: ed064f601ec1da6d691651e7779f71eb.dir
-    size: 9334
-    nfiles: 4
-  - path: src/train
-    md5: cb6c4a629d03d047f80d1d5a014ea828
-    size: 850
-  - path: src/utils
-    md5: 7dee500f97efa451c673d2b8bb74c3ed.dir
-    size: 9193
-    nfiles: 5
-  outs:
-  - path: ml/output/credit-card-fraud/confusion-matrix.png
-    md5: 3608507630664353ad60cfe49da0f9f4
-    size: 23224
-  - path: ml/output/credit-card-fraud/metrics.txt
-    md5: 63810924c6c3565e3b9698693c5e5cdc
-    size: 88
-  - path: ml/output/credit-card-fraud/model.joblib
-    md5: 7ab22ef88b042ee919b049eda96a1040
-    size: 203260
-  - path: ml/output/credit-card-fraud/precision-recall-curve.png
-    md5: b63dd8bc9134a7a1ce087a418a38a421
-    size: 33651
-  - path: ml/output/model.tar.gz
-    md5: c3162931b65a0237b18251d5983a5451
-    size: 180845
+schema: '2.0'
+stages:
+  train:
+    cmd: make docker-train
+    deps:
+    - path: Makefile
+      md5: 2096124208027ccb13e3459540383826
+      size: 2093
+    - path: Pipfile
+      md5: 144f64824b2546595a0126f644efa99c
+      size: 560
+    - path: Pipfile.lock
+      md5: 51990ddf928f59923c200a291cf0d25e
+      size: 104246
+    - path: ml/input/config/hyperparameters.json
+      md5: b0ca0075f5cde2336dc0937199a5cd50
+      size: 50
+    - path: ml/input/data/training/creditcard.csv
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
+    - path: src/experiment
+      md5: f2c7b3220250fa3660ccb9ccf50a3fff.dir
+      size: 9503
+      nfiles: 4
+    - path: src/train
+      md5: 7245c62efde2809071e646723e5a08e1
+      size: 992
+    - path: src/utils
+      md5: c72a36947d01d253350e3c8d2874ef2c.dir
+      size: 9557
+      nfiles: 5
+    outs:
+    - path: ml/output/credit-card-fraud/confusion-matrix.png
+      md5: 92c201da784754919fcd27510c19225b
+      size: 23315
+    - path: ml/output/credit-card-fraud/metrics.txt
+      md5: 3b5e2c37df8ee00dbcbb41f9ec39de83
+      size: 88
+    - path: ml/output/credit-card-fraud/model.joblib
+      md5: 3dc037a125262ad895c375a5cf5daca7
+      size: 97294
+    - path: ml/output/credit-card-fraud/precision-recall-curve.png
+      md5: 96113ea9d7d3b017ab08b147b4697767
+      size: 33289
+    - path: ml/output/model.tar.gz
+      md5: 25bbc5d9741cb6e6dcfb7b0dd96e5459
+      size: 89148
