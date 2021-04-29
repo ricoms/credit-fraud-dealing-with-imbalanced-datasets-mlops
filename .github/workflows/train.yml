@@ -56,7 +56,6 @@ jobs:
           # run-cache and reproduce pipeline
           dvc pull ml/input/data/training/creditcard.csv.dvc
           dvc repro -m
-          ls $PWD/ml/output/credit-card-fraud/
 
           # Report metrics
           echo "## Metrics" >> report.md
@@ -65,7 +64,7 @@ jobs:
 
           # Publish confusion matrix diff
           echo -e "## Plots\n### Class confusions" >> report.md
-          cml-publish $PWD/ml/output/credit-card-fraud/confusion_matrix.png --md >> report.md
+          cml-publish $PWD/ml/output/credit-card-fraud/confusion-matrix.png --md >> report.md
 
           cml-send-comment report.md
 
