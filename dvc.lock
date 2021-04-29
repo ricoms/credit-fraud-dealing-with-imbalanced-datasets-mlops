@@ -1,48 +1,50 @@
-train:
-  cmd: make docker-train
-  deps:
-  - path: Makefile
-    md5: 255ffc8fdf54ff964dbb025b3ee2a8c6
-    size: 1966
-  - path: Pipfile
-    md5: 85b33eb73f6677a7fff8279e690d6ed4
-    size: 524
-  - path: Pipfile.lock
-    md5: 3659408e73d8a628e16dc5d3246ee7db
-    size: 93142
-  - path: docker-compose.yml
-    md5: 8b3f82eaef7695af00910693749bdc53
-    size: 549
-  - path: docker/Dockerfile
-    md5: 84a6d8f25ff3901e8112b94308f1307e
-    size: 1190
-  - path: ml/input/data/training/creditcard.csv
-    md5: e90efcb83d69faf99fcab8b0255024de
-    size: 150828752
-  - path: src/experiment
-    md5: 609fca7cc9e997196f9c382bd382f396.dir
-    size: 9342
-    nfiles: 4
-  - path: src/train
-    md5: cb6c4a629d03d047f80d1d5a014ea828
-    size: 850
-  - path: src/utils
-    md5: 7dee500f97efa451c673d2b8bb74c3ed.dir
-    size: 9193
-    nfiles: 5
-  outs:
-  - path: ml/output/credit-card-fraud/confusion-matrix.png
-    md5: 3608507630664353ad60cfe49da0f9f4
-    size: 23224
-  - path: ml/output/credit-card-fraud/metrics.txt
-    md5: 63810924c6c3565e3b9698693c5e5cdc
-    size: 88
-  - path: ml/output/credit-card-fraud/model.joblib
-    md5: bd961767d9b3c7b57927ea85fed1dfd7
-    size: 203260
-  - path: ml/output/credit-card-fraud/precision-recall-curve.png
-    md5: b63dd8bc9134a7a1ce087a418a38a421
-    size: 33651
-  - path: ml/output/model.tar.gz
-    md5: 5932f5b5a92c7c0f045dd5ea2ce0021e
-    size: 180832
+schema: '2.0'
+stages:
+  train:
+    cmd: make docker-train
+    deps:
+    - path: Makefile
+      md5: 5001218f613e203c5a352bf91f8682ef
+      size: 1966
+    - path: Pipfile
+      md5: 5f62aa6f661a63bfa57196676958d5a3
+      size: 553
+    - path: Pipfile.lock
+      md5: c7e00e19ba5ef8beebf582be5bd13348
+      size: 94370
+    - path: docker-compose.yml
+      md5: 05379f86957966622a38606080d8c9bd
+      size: 549
+    - path: docker/Dockerfile
+      md5: 84a6d8f25ff3901e8112b94308f1307e
+      size: 1190
+    - path: ml/input/data/training/creditcard.csv
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
+    - path: src/experiment
+      md5: ed064f601ec1da6d691651e7779f71eb.dir
+      size: 9334
+      nfiles: 4
+    - path: src/train
+      md5: cb6c4a629d03d047f80d1d5a014ea828
+      size: 850
+    - path: src/utils
+      md5: 2c30f23d759b1968934d710fa70bd673.dir
+      size: 9185
+      nfiles: 5
+    outs:
+    - path: ml/output/credit-card-fraud/confusion-matrix.png
+      md5: 3608507630664353ad60cfe49da0f9f4
+      size: 23224
+    - path: ml/output/credit-card-fraud/metrics.txt
+      md5: 63810924c6c3565e3b9698693c5e5cdc
+      size: 88
+    - path: ml/output/credit-card-fraud/model.joblib
+      md5: bd961767d9b3c7b57927ea85fed1dfd7
+      size: 203260
+    - path: ml/output/credit-card-fraud/precision-recall-curve.png
+      md5: b63dd8bc9134a7a1ce087a418a38a421
+      size: 33651
+    - path: ml/output/model.tar.gz
+      md5: 30a4955bfa7c220adfdc3e2241ba5450
+      size: 180833
