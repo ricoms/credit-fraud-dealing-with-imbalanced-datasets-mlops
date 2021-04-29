@@ -38,7 +38,7 @@ class ExperimentArtifacts:
                 file_name = self.output_prefix / f"{name}.png"
                 logger.debug(f"Saving {file_name}")
                 figure.savefig(file_name)
-        
+
     def save(self):
         self.save_results()
 

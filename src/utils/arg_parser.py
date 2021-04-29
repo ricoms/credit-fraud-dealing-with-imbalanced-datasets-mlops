@@ -13,7 +13,7 @@ class ArgParser(ABC):
 
     def __init__(self):
         self.environment = os.environ.get("ENVIRON", "LOCAL")
-        
+
         config_defaults = {'home_dir': self.get_project_root()} \
             if self.environment == "LOCAL" else {}
         config = configparser.ConfigParser(config_defaults)
