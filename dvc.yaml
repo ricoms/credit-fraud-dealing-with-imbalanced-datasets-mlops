@@ -1,15 +1,14 @@
 stages:
-  get-data:
-    cmd: kaggle datasets download mlg-ulb/creditcardfraud --unzip --path ml/input/data/training
-    outs:
-    - ml/input/data/training/creditcard.csv
   train:
-    cmd: cd src/ && ./train --project_name credit-fraud --input_dir ../ml/input/data/training/creditcard.csv
+    cmd: make docker-train
     deps:
     - ml/input/data/training/creditcard.csv
     - src/experiment
     - src/train
     - src/utils
+    - Makefile
+    - Pipfile
+    - Pipfile.lock
     outs:
     - ml/output/credit-card-fraud/confusion-matrix.png:
         cache: false

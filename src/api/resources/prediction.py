@@ -20,9 +20,9 @@ class PredictionService:
     def __init__(self, models_classes: Dict[str, MLModel], model_dir: Path) -> None:
         self.model_dict = {}
         for model_name, model_class in models_classes.items():
-            logger.info(f"Loading model: '{model_name}'")
             model = model_class()
             model.load(model_dir)
+            logger.info(f"Loading model: '{model.model_id}'")
             self.model_dict[model.model_id] = model
 
     def on_post(self, request, response):

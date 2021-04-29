@@ -13,28 +13,6 @@ env:
   IMAGE_NAME: credit-fraud-ml
 
 jobs:
-  # docker-lint:
-  #   name: Hadolint Dockerfile
-  #   runs-on: macOS-latest
-  #   timeout-minutes: 30
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-
-  #     - name: Run hadolint
-  #       run: |
-  #         brew install hadolint
-  #         hadolint ./Dockerfile | tee -a hadolint_lint.txt
-  #         lintErrors=$(stat -f%z hadolint_lint.txt)
-  #         if [ "$lintErrors" -gt "0" ]; then
-  #             echo "Errors have been found, please see below"
-  #             cat hadolint_lint.txt
-  #             exit 1
-  #         else
-  #             echo "No erros found on Dockerfile!!"
-  #         fi
-  
   python-lint:
     runs-on: ubuntu-latest
     strategy:
@@ -51,8 +29,10 @@ jobs:
 
       - name: Run linting
         run: |
-          make install
-          make lint-python
+          pip install --no-cache-dir pipenv==2020.8.13
+          pipenv install --dev
+          pipenv run flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+          pipenv run flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   python-test:
     runs-on: ubuntu-latest
@@ -70,8 +50,10 @@ jobs:
 
       - name: Run test
         run: |
-          make install
-          make coverage
+          pip install --no-cache-dir pipenv==2020.8.13
+          pipenv install --dev
+          pipenv run pytest --cov-report=term-missing --cov=src --cov-fail-under=0.4
+          pipenv run pytest --cov-report=html --cov=src
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
