@@ -1,4 +1,4 @@
 {
-    "penalty": "elasticnet",
-    "C": 0.01
+    "penalty": "l1",
+    "solver": "liblinear"
 }
