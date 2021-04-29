@@ -60,7 +60,7 @@ jobs:
           dvc pull ml/input/data/training/creditcard.csv.dvc
           dvc repro -m
           git add dvc.lock
-          git push
+          git push origin HEAD:${GITHUB_REF##*/}
 
           # Report metrics
           echo "## Metrics" >> report.md
