@@ -68,7 +68,7 @@ jobs:
           dvc metrics diff main --show-md >> report.md
 
           # Publish confusion matrix diff
-          echo -e "## Plots\n### Class confusions" >> report.md
+          echo -e "## Plots\n### Confusion matrix" >> report.md
           cml-publish $PWD/ml/output/credit-card-fraud/confusion-matrix.png --md >> report.md
 
           cml-send-comment report.md
