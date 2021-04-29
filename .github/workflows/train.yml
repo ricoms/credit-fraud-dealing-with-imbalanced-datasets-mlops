@@ -56,7 +56,7 @@ jobs:
           # run-cache and reproduce pipeline
           dvc pull ml/input/data/training/creditcard.csv.dvc
           dvc repro -m
-
+          tree .
           # Report metrics
           echo "## Metrics" >> report.md
           git fetch --prune
