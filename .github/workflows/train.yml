@@ -17,10 +17,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Run test
+      - name: Install dependencies
         run: |
           pip install --no-cache-dir pipenv==2020.8.13
           pipenv install --system --ignore-pipfile --deploy --clear --dev
+
+      - name: Run test
+        run: |
           pytest -v
 
   train-test:
@@ -39,6 +42,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir pipenv==2020.8.13
+          pipenv install --system --ignore-pipfile --deploy --clear
 
       - name: cml_run
         shell: bash
