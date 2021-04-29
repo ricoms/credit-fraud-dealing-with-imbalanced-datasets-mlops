@@ -7,7 +7,6 @@ stages:
     - src/train
     - src/utils
     - docker/Dockerfile
-    - docker-compose.yml
     - Makefile
     - Pipfile
     - Pipfile.lock

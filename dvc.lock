@@ -4,17 +4,14 @@ stages:
     cmd: make docker-train
     deps:
     - path: Makefile
-      md5: 5001218f613e203c5a352bf91f8682ef
-      size: 1966
+      md5: 7e64e625c649ced9ef0cdc489222cdbb
+      size: 2184
     - path: Pipfile
       md5: 5f62aa6f661a63bfa57196676958d5a3
       size: 553
     - path: Pipfile.lock
       md5: c7e00e19ba5ef8beebf582be5bd13348
       size: 94370
-    - path: docker-compose.yml
-      md5: b8a51564d3de9c4738c76383561b87be
-      size: 623
     - path: docker/Dockerfile
       md5: 84a6d8f25ff3901e8112b94308f1307e
       size: 1190
@@ -46,5 +43,5 @@ stages:
       md5: b63dd8bc9134a7a1ce087a418a38a421
       size: 33651
     - path: ml/output/model.tar.gz
-      md5: 2acb0815fc6ebaaf503750f6cb220929
+      md5: d9a6f0d0770781355b62869485cafa5d
       size: 180833
