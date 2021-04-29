@@ -3,6 +3,7 @@ stages:
     cmd: make docker-train
     deps:
     - ml/input/data/training/creditcard.csv
+    - ml/input/config/hyperparameters.json
     - src/experiment
     - src/train
     - src/utils
