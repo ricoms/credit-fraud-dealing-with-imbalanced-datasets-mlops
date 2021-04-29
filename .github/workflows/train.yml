@@ -30,10 +30,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - uses: iterative/cml-action@v1
-        with:
-          version: latest
+
+      - uses: iterative/setup-cml@v1
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
