@@ -1,4 +1,4 @@
 {
-    "penalty": "l1",
-    "solver": "liblinear"
+    "loss": "modified_huber",
+    "penalty": "l2"
 }
