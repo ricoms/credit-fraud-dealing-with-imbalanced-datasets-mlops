@@ -50,6 +50,7 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          tree .
           # run-cache and reproduce pipeline
           dvc pull ml/input/data/training/creditcard.csv.dvc
           dvc repro -m
