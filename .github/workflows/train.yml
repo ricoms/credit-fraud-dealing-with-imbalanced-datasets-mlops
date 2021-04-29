@@ -1,6 +1,9 @@
 name: Machine Learning Train
 
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   python-test:
@@ -33,6 +36,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
       - uses: iterative/setup-cml@v1
 
@@ -72,3 +77,11 @@ jobs:
         shell: bash
         run: |
           dvc push
+      
+      - name: Commit report
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git commit -am "Update dvc lock"
+          git push

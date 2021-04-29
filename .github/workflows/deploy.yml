@@ -27,10 +27,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Run linting
+      - name: Install dependencies
         run: |
           pip install --no-cache-dir pipenv==2020.8.13
-          pipenv install --dev
+          pipenv install --system --ignore-pipfile --deploy --clear
+
+      - name: Run linting
+        run: |
           pipenv run flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
           pipenv run flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
@@ -48,12 +51,16 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Run test
+      - name: Install dependencies
         run: |
           pip install --no-cache-dir pipenv==2020.8.13
-          pipenv install --dev
+          pipenv install --system --ignore-pipfile --deploy --clear
+
+      - name: Run test
+        run: |
           pipenv run pytest --cov-report=term-missing --cov=src --cov-fail-under=0.4
           pipenv run pytest --cov-report=html --cov=src
+      
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
@@ -63,7 +70,6 @@ jobs:
 
   setup-build-publish-deploy:
     name: Setup, Build, Publish
-    needs: [docker-lint]
     runs-on: ubuntu-latest
 
     steps:
