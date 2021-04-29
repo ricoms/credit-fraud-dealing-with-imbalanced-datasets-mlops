@@ -45,7 +45,7 @@ profile-data:
 docker-build:	
 	docker build -f ./docker/Dockerfile -t ${DOCKER_IMAGE_NAME} .
 
-docker-train: ${DATA_FILE}
+train: ${DATA_FILE}
 	./src/train \
 		--project_name credit-fraud \
 		--input_dir ml/input/data/training/creditcard.csv
