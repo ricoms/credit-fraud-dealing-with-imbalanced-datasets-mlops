@@ -25,7 +25,7 @@ imblearn = "*"
 pandas = "*"
 seaborn = "*"
 pandas-profiling = "*"
-dvc = "==2.0.18"
+dvc = {extras = ["s3"], version = "==2.0.18"}
 
 [requires]
 python_version = "3.8"
