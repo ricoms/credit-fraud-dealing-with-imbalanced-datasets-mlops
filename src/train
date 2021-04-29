@@ -7,6 +7,7 @@ from utils.arg_parser import TrainArgParser
 from utils.logger import logger
 from utils.files import JsonFile
 
+
 if __name__ == '__main__':
     logger.info(f"Begin train")
 
