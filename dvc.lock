@@ -13,8 +13,8 @@ stages:
       md5: c7e00e19ba5ef8beebf582be5bd13348
       size: 94370
     - path: docker-compose.yml
-      md5: 05379f86957966622a38606080d8c9bd
-      size: 549
+      md5: b8a51564d3de9c4738c76383561b87be
+      size: 623
     - path: docker/Dockerfile
       md5: 84a6d8f25ff3901e8112b94308f1307e
       size: 1190
@@ -46,5 +46,5 @@ stages:
       md5: b63dd8bc9134a7a1ce087a418a38a421
       size: 33651
     - path: ml/output/model.tar.gz
-      md5: 30a4955bfa7c220adfdc3e2241ba5450
+      md5: 2acb0815fc6ebaaf503750f6cb220929
       size: 180833

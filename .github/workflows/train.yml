@@ -42,7 +42,7 @@ jobs:
       - name: Install dvc and docker-compose
         shell: bash
         run: |
-          pip install 'dvc[s3]==1.11.2'
+          pip install 'dvc[s3]==2.0.18'
           sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
@@ -53,8 +53,7 @@ jobs:
         run: |
           # run-cache and reproduce pipeline
           dvc pull ml/input/data/training/creditcard.csv.dvc
-          ls ml/input/data/training/
-          dvc repro
+          dvc repro -m
 
           # Report metrics
           echo "## Metrics" >> report.md

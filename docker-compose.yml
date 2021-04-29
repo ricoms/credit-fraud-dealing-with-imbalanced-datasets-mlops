@@ -10,7 +10,11 @@ services:
     user: ${UID_GID}
     volumes:
       - ./ml:/opt/ml:rw
-    command: ls /opt/ml/input/data/training/
+    command: >
+      bash -c "
+        ls /opt/ml/input/data/training/
+        train --project_name credit-fraud --input_dir /opt/ml/input/data/training/creditcard.csv
+      "
 
   serve:
     container_name: credit-fraud-serve
