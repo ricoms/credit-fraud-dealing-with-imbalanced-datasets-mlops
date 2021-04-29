@@ -64,7 +64,7 @@ lint-python:
 lint: lint-docker lint-python
 	
 coverage:
-	pytest --cov-report=term-missing --cov=src --cov-fail-under=0.4
+	pytest --cov-report=term-missing --cov=src --cov-fail-under=0.8
 	pytest --cov-report=html --cov=src
 
 build-image:
