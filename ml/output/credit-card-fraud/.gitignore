@@ -1,1 +1,3 @@
-/metrics.txt
+*
+!.gitignore
+!data_profile.html

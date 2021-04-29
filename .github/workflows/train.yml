@@ -40,7 +40,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Install dvc and docker-compose
+      - name: Install dvc
         shell: bash
         run: |
           pip install 'dvc[s3]==2.0.18'
@@ -53,6 +53,8 @@ jobs:
           # run-cache and reproduce pipeline
           dvc pull ml/input/data/training/creditcard.csv.dvc
           dvc repro -m
+          git add dvc.lock
+          git push
 
           # Report metrics
           echo "## Metrics" >> report.md
@@ -65,7 +67,7 @@ jobs:
 
           cml-send-comment report.md
 
-      - name: Save artifacts package
+      - name: Save artifacts
         shell: bash
         run: |
           dvc push
