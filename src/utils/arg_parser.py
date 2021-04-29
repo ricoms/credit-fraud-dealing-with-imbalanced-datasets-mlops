@@ -70,6 +70,13 @@ class TrainArgParser(ArgParser):
             type=str,
             help=f"Run ID (default: '{self.run_tag}')",
         )
+        hyperparameters_file_path = Path(os.environ["SM_OUTPUT_DIR"]) / self.hyperparameters_file_name
+        parser.add_argument(
+            '--hyperparameters_path',
+            default=hyperparameters_file_path,
+            type=Path,
+            help=f"Hyperparameters file path (default: '{hyperparameters_file_path}')",
+        )
         args = parser.parse_args()
 
         return args

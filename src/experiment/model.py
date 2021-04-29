@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from pathlib import Path
 
 import joblib
 import matplotlib.pyplot as plt
@@ -33,7 +35,9 @@ class MLModel(ABC):
         pass
 
 
+@dataclass
 class ProjectModel(MLModel):
+    model_hyperparameters: Path = None
 
     @property
     def model_id(self) -> str:
@@ -55,11 +59,12 @@ class ProjectModel(MLModel):
         return self.model
 
     def __build_model(self):
-        log_reg_params = {"penalty": 'l2', 'C': 0.01}
-
         std_scaler = StandardScaler()
         smt = SMOTE(k_neighbors=3, random_state=42, sampling_strategy='minority')
-        log_reg_sm = LogisticRegression(**log_reg_params)
+        if self.model_hyperparameters:
+            log_reg_sm = LogisticRegression(**self.model_hyperparameters)
+        else:
+            log_reg_sm = LogisticRegression()
 
         pipeline = imbalanced_make_pipeline(
             std_scaler,

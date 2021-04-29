@@ -1,1 +1,4 @@
-{}
+{
+    "penalty": "elasticnet",
+    "C": 0.01
+}
