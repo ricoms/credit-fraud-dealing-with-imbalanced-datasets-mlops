@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import make_pipeline as imbalanced_make_pipeline
-from sklearn.linear_model import PassiveAggressiveClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (average_precision_score, confusion_matrix,
                              f1_score, precision_recall_curve, precision_score,
                              recall_score, roc_auc_score)
@@ -62,9 +62,9 @@ class ProjectModel(MLModel):
         std_scaler = StandardScaler()
         smt = SMOTE(k_neighbors=3, random_state=42, sampling_strategy='minority')
         if self.model_hyperparameters:
-            log_reg_sm = PassiveAggressiveClassifier(**self.model_hyperparameters)
+            log_reg_sm = LogisticRegression(**self.model_hyperparameters)
         else:
-            log_reg_sm = PassiveAggressiveClassifier()
+            log_reg_sm = LogisticRegression()
 
         pipeline = imbalanced_make_pipeline(
             std_scaler,
